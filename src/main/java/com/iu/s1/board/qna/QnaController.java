@@ -51,7 +51,7 @@ public class QnaController {
 	}
 	
 	@GetMapping("qnaList")
-	public ModelAndView boardList(@PageableDefault(size = 10,page = 0,direction = Direction.DESC,sort = {"num"}) Pageable pageable, ModelAndView mv,@RequestParam(defaultValue = "") String search, String kind) throws Exception{
+	public ModelAndView boardList(@PageableDefault(size = 10,page = 0,direction = Direction.DESC,sort = {"num"}) Pageable pageable, ModelAndView mv,@RequestParam(defaultValue = "") String search,String kind) throws Exception{
 		Page<QnaVO> page= qnaService.boardList(pageable,search,kind);
 		
 		System.out.println(page.getContent().size());

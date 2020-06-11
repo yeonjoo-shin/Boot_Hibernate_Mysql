@@ -24,7 +24,7 @@ public class BoardVO {
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)//자동 증가 AI
-	private long num;
+	private Long num;
 	@Column
 	private String title;
 	@Column
@@ -35,7 +35,7 @@ public class BoardVO {
 	@CreationTimestamp //현재 날짜를 넣어주기 위한 어노테이션 
 	private Date regDate;
 	@Column
-	private long hit;
+	private Long hit;
 	
 
 }

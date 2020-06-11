@@ -23,11 +23,11 @@ import lombok.EqualsAndHashCode;
 public class QnaVO extends BoardVO {
 	
 	@Column
-	private long ref;
+	private Long ref;
 	@Column
-	private long step;
+	private Long step;
 	@Column
-	private long depth;
+	private Long depth;
 	
 	
 	@OneToMany(mappedBy = "qnaVO", cascade = CascadeType.ALL,fetch = FetchType.LAZY) //상대방이 알아야하는 자신의 이름(mappedBy)

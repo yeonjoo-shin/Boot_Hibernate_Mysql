@@ -86,7 +86,7 @@ class NoticeRepositoryTest {
 	
 	//@Test
 	public void updateTest() throws Exception{
-		noticeVO.setNum(3);
+		//noticeVO.setNum(3);
 		noticeVO.setTitle("update title3");
 		noticeVO = noticeRepository.save(noticeVO);
 		assertNotNull(noticeVO);
