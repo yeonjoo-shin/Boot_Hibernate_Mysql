@@ -21,9 +21,18 @@ public class QnaService {
 		return qnaRepository.save(qnaVO);
 	}
 	
-	public Page<QnaVO> boardList(Pageable pageable) throws Exception{
+	public Page<QnaVO> boardList(Pageable pageable,String search,String kind) throws Exception{
 		
-		Page<QnaVO> page= qnaRepository.findAll(pageable);
+		Page<QnaVO> page= qnaRepository.findByTitleContaining(search, pageable,kind);
+		
+		if(kind.equals("title")) {
+			 page=qnaRepository.findByTitleContaining(search, pageable,kind);
+		}else if(kind.equals("writer")){
+			page = qnaRepository.findByWriterContaining(search, pageable, kind);
+		}else {
+			page = qnaRepository.findByContentsContaining(search, pageable, kind);
+		}
+		
 		return page;
 	}
 }

@@ -13,19 +13,20 @@
 
 <div class="container">
 <h2>${board}List</h2>
-<form class="form-inline" action="./${board}List">
+<form class="form-inline" action="./${board}List" id="frm">
+<input type="hidden" name="page" id="p">
 		    <div class="input-group input-group-sm col-xs-2" >
 		    
 		    	<select class="form-control" id="sel1" name="kind">
-				    <option value="title">Title</option>
-				    <option value="contents">Contents</option>
-				    <option value="writer">writer</option>
+				    <option value="title" id="title" selected="selected">Title</option>
+				    <option value="contents" id="contents">Contents</option>
+				    <option value="writer" id="writer">writer</option>
   				</select>
   				</div>
   				
   				<div class="input-group input-group-sm col-xs-4">
   				
-			      <input type="text" class="form-control" placeholder="Search" name="search">
+			      <input type="text" class="form-control" placeholder="Search" name="search"  value="${param.search}">
 			      <div class="input-group-btn">
 			        <button class="btn btn-default" type="submit"><i class="glyphicon glyphicon-search"></i></button>
 			      </div>
@@ -62,26 +63,26 @@
 	<div>
 	
 	
-	<span><a href="./${board}List?page=0"> &lt;&lt;</a></span>
-	<span><a href="./${board}List?page=${page.number-1}">&lt;</a></span>
+	<span><a href="#" class="cpager" title="0"> &lt;&lt;</a></span>
+	<span><a href="#" class="cpager" title="${page.number-1}">&lt;</a></span>
 	<c:forEach begin="${page.number}" end="${page.number+4}" var="i">
 		<c:if test="${i lt page.getTotalPages()}">
-			<a href=" ./${board}List?page=${i}">${i+1}</a> 
+			<a href=" #" class="cpager" title="${i}">${i+1}</a> 
 		</c:if>
 	</c:forEach>
-	<span><a href="./${board}List?page=${page.number+1}">&gt;</a></span> <!-- 다음 페이지로 -->
-	<span><a href="./${board}List?page=${page.getTotalPages()-1}"> &gt;&gt;</a></span><!-- 제일 끝으로 -->
+	<span><a href="#" class="cpager" title="${page.number+1}">&gt;</a></span> <!-- 다음 페이지로 -->
+	<span><a href="#" class="cpager" title="${page.getTotalPages()-1}"> &gt;&gt;</a></span><!-- 제일 끝으로 -->
 	
 	<hr>
-
+	<!--  
 	<c:if test="${not page.isFirst() }">
 		<a href=" ./${board}List?page=${page.getNumber()-1 }">[이전]</a>
 	</c:if>
-		<span>${page.getNumber()+1}</span> <!-- 제일 첫번째 페이지가 0이 아니라 1로 보이고자함 -->
+		<span>${page.getNumber()+1}</span> <!-- 제일 첫번째 페이지가 0이 아니라 1로 보이고자함 
 	<c:if test="${not page.isLast() }">
 		<a href="./${board}List?page=${page.getNumber()+1 }">[다음]</a>
 	</c:if>	
-	</div>
+	</div> -->
 	
 	<a href="./${board}Write" class="btn btn-danger">Write</a>
 	<!--  
@@ -106,7 +107,32 @@
 </div> 
 
 <script type="text/javascript">
-	var  result =${result}; //숫자니까 ''안함
+
+	$(".cpager").click(function(){
+		var page = $(this).attr("title");//속성을 가지고오기 attr/prop
+		//alert(page);
+		$("#p").val(page);//form이 전송되면 안에 p도 파라미터로 넘어감
+		$("#frm").submit();//form 에 담겨서 넘어감
+	
+	});
+
+
+	var kind = '${param.kind}';
+	if(kind==''){
+ 		$("#title").prop("selected",true);
+	}else{
+		$("#"+kind).prop("selected",true);
+	}
+
+
+
+
+
+
+
+
+
+	var  result ='${result}'; 
 	
 	if(result !=''){
 		if(result=='1'){

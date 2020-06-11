@@ -23,15 +23,15 @@ class QnaRepositoryTest {
 	@Test
 	public void insertTest() throws Exception {
 		
-		for (int i = 0; i < 100; i++) {
+		
 
 		QnaVO qnaVO = new QnaVO();
-		qnaVO.setTitle("title");
-		qnaVO.setContents("contents");
-		qnaVO.setWriter("writer");
+		qnaVO.setTitle("new4");
+		qnaVO.setContents("contents4");
+		qnaVO.setWriter("writer4");
 		
 		qnaVO = qnaService.boardWrite(qnaVO);
-		}
+		
 
 		
 	}

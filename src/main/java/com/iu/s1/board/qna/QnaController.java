@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -39,23 +40,19 @@ public class QnaController {
 	}
 	
 	@PostMapping("qnaWrite")
-	public ModelAndView boardWrite(ModelAndView mv) throws Exception{
-		QnaVO qnaVO = new QnaVO();
+	public ModelAndView boardWrite(ModelAndView mv,QnaVO qnaVO) throws Exception{
 		
 		qnaVO = qnaService.boardWrite(qnaVO);
-		if(qnaVO!=null) {
 
-			mv.setViewName("redirect:qnaList");
-		}else {
-			System.out.println("실패");
-		}
+		mv.setViewName("redirect:./qnaList");
+		
 		return mv;
 		
 	}
 	
 	@GetMapping("qnaList")
-	public ModelAndView boardList(@PageableDefault(size = 10,page = 0,direction = Direction.DESC,sort = {"num"}) Pageable pageable, ModelAndView mv) throws Exception{
-		Page<QnaVO> page= qnaService.boardList(pageable);
+	public ModelAndView boardList(@PageableDefault(size = 10,page = 0,direction = Direction.DESC,sort = {"num"}) Pageable pageable, ModelAndView mv,@RequestParam(defaultValue = "") String search, String kind) throws Exception{
+		Page<QnaVO> page= qnaService.boardList(pageable,search,kind);
 		
 		System.out.println(page.getContent().size());
 		System.out.println(page.getSize()); //몇개씩 볼것인가 
