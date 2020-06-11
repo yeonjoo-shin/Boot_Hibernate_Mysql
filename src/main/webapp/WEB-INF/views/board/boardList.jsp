@@ -42,7 +42,7 @@
 			<td>Hit</td>
 		</tr>
 		
-		<c:forEach items="${list}" var ="vo">
+		<c:forEach items="${page.content}" var ="vo">
 			<tr>
 				<td>${vo.num}</td>
 				<c:catch>
@@ -59,8 +59,15 @@
 		</c:forEach>
 	</table>
 	
-	<a href="./${board}Write" class="btn btn-danger">Write</a>
+	<div>
+
+	<c:if test="${not page.isFirst() }">[이전]</c:if>
+		<span>${page.getNumber()}</span>
+	<c:if test="${not page.isLast() }">[다음]</c:if>	
+	</div>
 	
+	<a href="./${board}Write" class="btn btn-danger">Write</a>
+	<!--  
 	<div>
 		<ul class="pagination">
 			<c:if test="${pager.curBlock gt 1 }">
@@ -74,7 +81,7 @@
 			</c:if>
 		</ul>
 	</div>
-	
+	-->
 	
 	
 	

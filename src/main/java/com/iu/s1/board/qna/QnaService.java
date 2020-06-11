@@ -3,6 +3,8 @@ package com.iu.s1.board.qna;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -19,8 +21,9 @@ public class QnaService {
 		return qnaRepository.save(qnaVO);
 	}
 	
-	public List<QnaVO> boardList() throws Exception{
-		List<QnaVO> ar = qnaRepository.findAll();
-		return ar;
+	public Page<QnaVO> boardList(Pageable pageable) throws Exception{
+		
+		Page<QnaVO> page= qnaRepository.findAll(pageable);
+		return page;
 	}
 }
