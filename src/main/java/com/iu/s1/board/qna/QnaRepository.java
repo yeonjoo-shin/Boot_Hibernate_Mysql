@@ -11,5 +11,14 @@ public interface QnaRepository extends JpaRepository<QnaVO, Long> {
 	public Page<QnaVO> findByTitleContaining(String search,Pageable pageable);
 	public Page<QnaVO> findByWriterContaining(String search,Pageable pageable);
 	public Page<QnaVO> findByContentsContaining(String search,Pageable pageable);
+	/*
+	//타이틀 검색
+	Page<QnaVO> findByTitleContaining(String search,Pageable pageable);
+	//contents 검색
+	Page<QnaVO> findByContentsContaining(String search,Pageable pageable);
+	// 작성자 검색
+	Page<QnaVO> findByWriterContaining(String search,Pageable pageable);
+	
+	*/
 
 }

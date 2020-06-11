@@ -14,7 +14,7 @@
 <div class="container">
 <h2>${board}List</h2>
 <form class="form-inline" action="./${board}List" id="frm">
-<input type="hidden" name="page" id="p">
+<input type="hidden" name="curPage" id="p">
 		    <div class="input-group input-group-sm col-xs-2" >
 		    
 		    	<select class="form-control" id="sel1" name="kind">
