@@ -73,8 +73,9 @@ public class NoticeController {
 		boardVO.setWriter(memberVO.getId());
 		
 		mv.addObject("boardVO",boardVO);
-		mv.setViewName("board/boardWrite");
 		mv.addObject("path","Write");
+		mv.setViewName("board/boardWrite");
+		
 		return mv;
 	}
 	
@@ -84,6 +85,7 @@ public class NoticeController {
 		
 		noticeVO = noticeService.setInsert(noticeVO, files);
 		if(noticeVO!=null) {
+			
 			mv.setViewName("redirect:noticeList");
 		}else {
 			System.out.println("실패");
