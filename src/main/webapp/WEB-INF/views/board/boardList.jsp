@@ -60,10 +60,27 @@
 	</table>
 	
 	<div>
+	
+	
+	<span><a href="./${board}List?page=0"> &lt;&lt;</a></span>
+	<span><a href="./${board}List?page=${page.number-1}">&lt;</a></span>
+	<c:forEach begin="${page.number}" end="${page.number+4}" var="i">
+		<c:if test="${i lt page.getTotalPages()}">
+			<a href=" ./${board}List?page=${i}">${i+1}</a> 
+		</c:if>
+	</c:forEach>
+	<span><a href="./${board}List?page=${page.number+1}">&gt;</a></span> <!-- 다음 페이지로 -->
+	<span><a href="./${board}List?page=${page.getTotalPages()-1}"> &gt;&gt;</a></span><!-- 제일 끝으로 -->
+	
+	<hr>
 
-	<c:if test="${not page.isFirst() }">[이전]</c:if>
-		<span>${page.getNumber()}</span>
-	<c:if test="${not page.isLast() }">[다음]</c:if>	
+	<c:if test="${not page.isFirst() }">
+		<a href=" ./${board}List?page=${page.getNumber()-1 }">[이전]</a>
+	</c:if>
+		<span>${page.getNumber()+1}</span> <!-- 제일 첫번째 페이지가 0이 아니라 1로 보이고자함 -->
+	<c:if test="${not page.isLast() }">
+		<a href="./${board}List?page=${page.getNumber()+1 }">[다음]</a>
+	</c:if>	
 	</div>
 	
 	<a href="./${board}Write" class="btn btn-danger">Write</a>
