@@ -31,5 +31,5 @@ public class QnaVO extends BoardVO {
 	
 	
 	@OneToMany(mappedBy = "qnaVO", cascade = CascadeType.ALL,fetch = FetchType.LAZY) //상대방이 알아야하는 자신의 이름(mappedBy)
-	private List<QnaFileVO> qnaFileVOs; //file은 여러개니까 List타입으로 선언
+	private List<QnaFileVO> boadFiles; //file은 여러개니까 List타입으로 선언
 }

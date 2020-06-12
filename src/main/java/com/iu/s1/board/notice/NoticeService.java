@@ -42,6 +42,12 @@ public class NoticeService  {
 	@Value("${board.notice.filePath}") 
 	private String filePath;
 	
+	
+	
+	
+	
+	
+	
 	//pager없을 땐느 매개변수없어도됨
 	public Page<NoticeVO> getSelectList(/*Pageable pageable,String search,String kind*/Pager pager) throws Exception {
 		//List<NoticeVO> ar = noticeRepository.findAll();

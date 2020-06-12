@@ -25,7 +25,7 @@ public class NoticeVO extends BoardVO{
 	
 	//one은 자기 자신, many는 밑에 선언한  file이 여러개 
 	@OneToMany(mappedBy = "noticeVO",cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-	private  List<NoticeFileVO> noticeFileVOs;
+	private  List<NoticeFileVO> boadFiles;
 	
 	//FetchType :  eager : notice 조회할 때 noticeFile도 같이 조회
 	//			: lazy : notice조회 할때  오직 notice 만 조회하고, 쓰려고 선언해야지만 noticeFile을 조회할 수 있다. 

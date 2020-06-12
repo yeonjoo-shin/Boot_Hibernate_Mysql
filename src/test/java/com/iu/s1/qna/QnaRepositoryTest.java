@@ -20,7 +20,7 @@ class QnaRepositoryTest {
 	private QnaService qnaService;
 	
 
-	@Test
+	//@Test
 	public void insertTest() throws Exception {
 		
 		
@@ -30,7 +30,7 @@ class QnaRepositoryTest {
 		qnaVO.setContents("contents4");
 		qnaVO.setWriter("writer4");
 		
-		qnaVO = qnaService.boardWrite(qnaVO);
+		//qnaVO = qnaService.boardWrite(qnaVO);
 		
 
 		

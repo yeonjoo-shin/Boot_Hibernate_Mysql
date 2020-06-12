@@ -23,7 +23,10 @@
 		<div class="panel-body"> ${vo.contents } </div> 
 	</div>
 
-
+		<c:forEach items="${vo.boadFiles}" var="fileVO">
+			<h2>${fileVO.oriName}</h2>
+			<img src="../upload/${board}/${fileVO.fileName}"/>
+		</c:forEach>
 
 
 

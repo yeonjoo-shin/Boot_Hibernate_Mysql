@@ -40,7 +40,7 @@ class NoticeRepositoryTest {
 		noticeFileVO.setNoticeVO(noticeVO);
 		noticeFileVOs.add(noticeFileVO);
 		
-		noticeVO.setNoticeFileVOs(noticeFileVOs);
+		noticeVO.setBoadFiles(noticeFileVOs);
 	}
 	
 	//@Test

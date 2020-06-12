@@ -1,17 +1,23 @@
 package com.iu.s1.board.qna;
 
+import java.io.File;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
 import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
+import com.iu.s1.util.FileManager;
+import com.iu.s1.util.FilePathGenerator;
 import com.iu.s1.util.Pager;
 
 @Service
@@ -19,22 +25,60 @@ import com.iu.s1.util.Pager;
 public class QnaService {
 	@Autowired
 	private QnaRepository qnaRepository;
+	@Autowired
+	private FilePathGenerator filePathGenerator;
+	@Autowired
+	private FileManager fileManager;
+	@Value("${board.qna.filePath}")
+	private String filePath;
 	
-	public QnaVO boardWrite(QnaVO qnaVO) throws Exception{
+	
+	
+	public void boardUpdate(QnaVO qnaVO,MultipartFile[] multipartFile) throws Exception{
+		qnaRepository.qnaUpdate(qnaVO.getTitle(), qnaVO.getContents(), qnaVO.getNum());
+		
+	}
+	
+
+	public QnaVO boardWrite(QnaVO qnaVO,MultipartFile[] files) throws Exception{
 		//ref 0인 상태
-	
+		qnaVO.getRef();//자꾸 null이 들어가서 호출해둔 상태
+		qnaVO.getStep();
+		qnaVO.getDepth();
+		List<QnaFileVO> list = new ArrayList<>(); //list파일이 여러개니까 담아서 보내주기
+		//저장경로
+		File file = filePathGenerator.getUseClassPathResource(filePath);
+		//hdd에 저장
+		 for(MultipartFile multipartFile : files) {
+			 if(multipartFile.getSize()<=0) {
+				 continue;
+			 }
+			 QnaFileVO qnaFileVO = new QnaFileVO();
+			 String fileName=fileManager.saveFileCopy(multipartFile, file);
+			 qnaFileVO.setFileName(fileName);
+			 qnaFileVO.setOriName(multipartFile.getOriginalFilename());
+			 qnaFileVO.setQnaVO(qnaVO);
+			 list.add(qnaFileVO);
+		 }
+		qnaVO.setBoadFiles(list); //list 세팅
+		 
 		qnaVO = qnaRepository.save(qnaVO);
 		//insert
-		qnaVO.setRef(qnaVO.getNum());
+		//qnaVO.setRef(qnaVO.getNum());
 		//다시 업데이트
 		return qnaRepository.save(qnaVO);
 	}
 	
+	public boolean boardDelete(QnaVO qnaVO)throws Exception{
+		qnaRepository.deleteById(qnaVO.getNum());
+		return qnaRepository.existsById(qnaVO.getNum());//제대로 삭제되었는지 확인하고자함
+	}
 	
 	
 	
 	public QnaVO boardSelect(QnaVO qnaVO) throws Exception{
-		qnaVO=qnaRepository.findById(qnaVO.getNum()).get();
+		//qnaVO=qnaRepository.findById(qnaVO.getNum()).get();
+		qnaVO = qnaRepository.qnaSelect(qnaVO.getNum());//jpql
 		return qnaVO;
 	}
 	

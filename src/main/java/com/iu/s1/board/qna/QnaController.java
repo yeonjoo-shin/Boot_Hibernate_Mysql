@@ -33,6 +33,37 @@ public class QnaController {
 		return "qna";
 	}
 	
+	//update 첨부파일은 유지
+	@GetMapping("qnaUpdate")
+	public ModelAndView boardUpdate(QnaVO qnaVO, ModelAndView mv) throws Exception{
+		qnaVO=qnaService.boardSelect(qnaVO);
+		
+		mv.addObject("boardVO",qnaVO);
+		mv.addObject("path","Update");
+		mv.setViewName("board/boardWrite");
+		return mv;
+	}
+	
+	@PostMapping("qnaUpdate")
+	public ModelAndView boardUpdate(QnaVO qnaVO,MultipartFile[] files) throws Exception{
+		ModelAndView mv = new ModelAndView();
+		qnaService.boardUpdate(qnaVO,files);
+		mv.setViewName("redirect:./qnaList");
+		return mv;
+	}
+	
+	@GetMapping("qnaDelete")
+	public ModelAndView boardDelete(QnaVO qnaVO) throws Exception{
+		ModelAndView mv = new ModelAndView();
+		boolean result = qnaService.boardDelete(qnaVO);
+		if(!result) {
+			
+		}
+		mv.setViewName("redirect:./qnaList");
+		return mv;
+	}
+	
+	
 	@GetMapping("qnaReply")
 	public ModelAndView boardReply(ModelAndView mv, BoardVO boardVO) throws Exception{
 		mv.addObject("boardVO",boardVO);
@@ -73,9 +104,9 @@ public class QnaController {
 	}
 	
 	@PostMapping("qnaWrite")
-	public ModelAndView boardWrite(ModelAndView mv,QnaVO qnaVO) throws Exception{
+	public ModelAndView boardWrite(ModelAndView mv,QnaVO qnaVO,MultipartFile[] files) throws Exception{
 		
-		qnaVO = qnaService.boardWrite(qnaVO);
+		qnaVO = qnaService.boardWrite(qnaVO,files);
 
 		mv.setViewName("redirect:./qnaList");
 		
