@@ -8,6 +8,9 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface QnaRepository extends JpaRepository<QnaVO, Long> {
 	
+	public List<QnaVO> findByRefAndStepGreaterThan(long ref,long step);
+	
+	
 	public Page<QnaVO> findByTitleContaining(String search,Pageable pageable);
 	public Page<QnaVO> findByWriterContaining(String search,Pageable pageable);
 	public Page<QnaVO> findByContentsContaining(String search,Pageable pageable);

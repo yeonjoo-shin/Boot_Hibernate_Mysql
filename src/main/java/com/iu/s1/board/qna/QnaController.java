@@ -33,6 +33,36 @@ public class QnaController {
 		return "qna";
 	}
 	
+	@GetMapping("qnaReply")
+	public ModelAndView boardReply(ModelAndView mv, BoardVO boardVO) throws Exception{
+		mv.addObject("boardVO",boardVO);
+		mv.setViewName("board/boardWrite");
+		mv.addObject("path","Reply");
+		return mv;
+	}
+	
+	@PostMapping("qnaReply")
+	public ModelAndView boardReply(ModelAndView mv , QnaVO qnaVO) throws Exception{
+		qnaVO=qnaService.boardReply(qnaVO);
+		mv.setViewName("redirect:./qnaList");	
+		
+		return mv;
+	}
+	
+
+	
+	
+	@GetMapping("qnaSelect")
+	public ModelAndView boardSelect(ModelAndView mv, QnaVO qnaVO) throws Exception{
+		qnaVO=qnaService.boardhit(qnaVO);//조회수 증가
+		qnaVO=qnaService.boardSelect(qnaVO);
+		mv.addObject("vo",qnaVO);
+		mv.setViewName("board/boardSelect");
+		return mv;
+	}
+	
+	
+	
 	@GetMapping("qnaWrite")
 	public ModelAndView boardWrite() throws Exception{
 		ModelAndView mv = new ModelAndView();

@@ -16,7 +16,6 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Data
-
 @NoArgsConstructor//생성자 만들기
 @AllArgsConstructor//매개변수가 있는 생성자 만들기
 @MappedSuperclass //얘는 테이블을 만드는게 아니라 다른애들의 부모역할을 할 것이다.
@@ -24,7 +23,7 @@ public class BoardVO {
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)//자동 증가 AI
-	private Long num;
+	private long num;
 	@Column
 	private String title;
 	@Column
@@ -34,8 +33,8 @@ public class BoardVO {
 	@Column
 	@CreationTimestamp //현재 날짜를 넣어주기 위한 어노테이션 
 	private Date regDate;
-	@Column
-	private Long hit;
+	@Column//기본값 0을 설정해줌
+	private long hit; 
 	
 
 }

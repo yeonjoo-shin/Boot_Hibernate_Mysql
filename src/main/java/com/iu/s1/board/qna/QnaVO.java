@@ -22,12 +22,12 @@ import lombok.EqualsAndHashCode;
 @Entity
 public class QnaVO extends BoardVO {
 	
+	@Column //기본값 0을 설정해줌
+	private long ref; //Long 타입이랑 기본값이 0이 아니라 null이들어가는 문제가 발생
 	@Column
-	private Long ref;
+	private long step;
 	@Column
-	private Long step;
-	@Column
-	private Long depth;
+	private long depth;
 	
 	
 	@OneToMany(mappedBy = "qnaVO", cascade = CascadeType.ALL,fetch = FetchType.LAZY) //상대방이 알아야하는 자신의 이름(mappedBy)

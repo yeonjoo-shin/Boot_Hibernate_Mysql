@@ -20,7 +20,7 @@ import lombok.EqualsAndHashCode;
 @EqualsAndHashCode(callSuper = false)
 @Table(name = "notice")
 @Entity
-@DynamicUpdate
+@DynamicUpdate(value = true)
 public class NoticeVO extends BoardVO{
 	
 	//one은 자기 자신, many는 밑에 선언한  file이 여러개 

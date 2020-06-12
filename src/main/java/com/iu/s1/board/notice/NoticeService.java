@@ -85,14 +85,21 @@ public class NoticeService  {
 		
 		File file =pathGenerator.getUseClassPathResource(filePath);
 		
+		System.out.println("file >" + file);
+		
 		noticeVO = noticeRepository.save(noticeVO);
 		
 		for(MultipartFile multipartFile : files) {
 			if(multipartFile.getSize()<=0) {
+				
 				continue;
+				
 			}
 			
+		System.out.println(multipartFile.getName() +"multi");	
 		String fileName = fileManager.saveFileCopy(multipartFile, file);
+		System.out.println("filename :" +fileName);
+		
 		NoticeFileVO noticeFileVO = new NoticeFileVO();
 		noticeFileVO.setFileName(fileName);
 		noticeFileVO.setOriName(multipartFile.getOriginalFilename());

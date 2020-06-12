@@ -46,13 +46,14 @@
 		<c:forEach items="${page.content}" var ="vo">
 			<tr>
 				<td>${vo.num}</td>
+				<td>
 				<c:catch>
 					<c:forEach begin="1" end="${vo.depth}">
 						[답변]							
 					</c:forEach>
 				</c:catch>
 				
-				<td><a href="${board}Select?num=${vo.num}">${vo.title }</a></td>
+				<a href="${board}Select?num=${vo.num}">${vo.title }</a></td>
 				<td>${vo.writer }</td>
 				<td>${vo.regDate }</td>
 				<td>${vo.hit }</td>

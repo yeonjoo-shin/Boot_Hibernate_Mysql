@@ -24,6 +24,8 @@ import com.iu.s1.board.BoardVO;
 import com.iu.s1.member.MemberVO;
 import com.iu.s1.util.Pager;
 
+import javassist.expr.NewArray;
+
 @Controller
 @RequestMapping("/notice/**/")
 public class NoticeController {
@@ -42,12 +44,12 @@ public class NoticeController {
 		//pageable =PageRequest.of(0, 10,Sort.Direction.DESC,"num");// 페이지번호(=curPage), 몇개씩, 정렬desc, 무엇을 기준으로?
 		
 		//List<NoticeVO> ar = noticeService.getSelectList(pageable,search,kind);
-		Page<NoticeVO> ar = noticeService.getSelectList(pager);
-		
+		Page<NoticeVO> page = noticeService.getSelectList(pager);
+		System.out.println("ar ; " +page.getTotalElements());
 		
 		//mv.addObject("list",ar);
 		mv.addObject("pager",pager);
-		mv.addObject("page",ar);
+		mv.addObject("page",page);
 		mv.setViewName("board/boardList");
 		
 		//List<NoticeVO> ar = noticeService.getSelectList();
@@ -68,14 +70,14 @@ public class NoticeController {
 	}
 	
 	@GetMapping("noticeWrite")
-	public ModelAndView noticeWrite(ModelAndView mv, HttpSession session)throws Exception{
-		MemberVO memberVO = (MemberVO)session.getAttribute("member");
+	public ModelAndView noticeWrite(ModelAndView mv)throws Exception{
+		//MemberVO memberVO = (MemberVO)session.getAttribute("member");
 		
-		BoardVO boardVO = new BoardVO();
 		
-		boardVO.setWriter(memberVO.getId());
 		
-		mv.addObject("boardVO",boardVO);
+		//boardVO.setWriter(memberVO.getId());
+		
+		mv.addObject("boardVO",new BoardVO());
 		mv.addObject("path","Write");
 		mv.setViewName("board/boardWrite");
 		
@@ -83,16 +85,14 @@ public class NoticeController {
 	}
 	
 	@PostMapping("noticeWrite")
-	public ModelAndView noticeWrite(ModelAndView mv,MultipartFile[] files) throws Exception{
-		NoticeVO noticeVO = new NoticeVO();
-		
+	public ModelAndView noticeWrite(ModelAndView mv,MultipartFile[] files,NoticeVO noticeVO) throws Exception{		
+		// 새로 생성하면 안됨. 매개변수로 받아야지 정보를 받아오지  새로생성하면 당연히 널이지 바보야 ㅜㅜㅜㅜㅠㅜㅜㅜ
 		noticeVO = noticeService.setInsert(noticeVO, files);
-		if(noticeVO!=null) {
+		System.out.println("c : " +noticeVO.getTitle());//null
+		
 			
-			mv.setViewName("redirect:noticeList");
-		}else {
-			System.out.println("실패");
-		}
+		mv.setViewName("redirect:noticeList");
+		
 		return mv;
 	}
 }
