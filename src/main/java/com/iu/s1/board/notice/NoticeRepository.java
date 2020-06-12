@@ -2,8 +2,11 @@ package com.iu.s1.board.notice;
 
 import java.util.List;
 
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
+
+import com.iu.s1.board.qna.QnaVO;
 
 public interface NoticeRepository extends JpaRepository<NoticeVO, Long> {
 	//프리미티브 타입음 안되므로 long 안됨
@@ -15,9 +18,14 @@ public interface NoticeRepository extends JpaRepository<NoticeVO, Long> {
 	public int countByWriterContaining(String search);
 	public int countByContentsContaining(String search);
 	
-	public List<NoticeVO> findByTitleContaining(String search,Pageable pageable);
-	public List<NoticeVO> findByWriterContaining(String search,Pageable pageable);
-	public List<NoticeVO> findByContentsContaining(String search,Pageable pageable);
+	//public List<NoticeVO> findByTitleContaining(String search,Pageable pageable);
+	//public List<NoticeVO> findByWriterContaining(String search,Pageable pageable);
+	//public List<NoticeVO> findByContentsContaining(String search,Pageable pageable);
+	
+	
+	public Page<NoticeVO> findByTitleContaining(String search,Pageable pageable);
+	public Page<NoticeVO> findByWriterContaining(String search,Pageable pageable);
+	public Page<NoticeVO> findByContentsContaining(String search,Pageable pageable);
 	
 	//select * from notice where num>0 order by num desc
 	public List<NoticeVO> findByNumGreaterThanOrderByNumDesc(long num);

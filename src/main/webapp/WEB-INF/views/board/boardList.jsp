@@ -14,7 +14,7 @@
 <div class="container">
 <h2>${board}List</h2>
 <form class="form-inline" action="./${board}List" id="frm">
-<input type="hidden" name="curPage" id="p">
+<input type="hidden" name="page" id="p">
 		    <div class="input-group input-group-sm col-xs-2" >
 		    
 		    	<select class="form-control" id="sel1" name="kind">
@@ -31,7 +31,7 @@
 			        <button class="btn btn-default" type="submit"><i class="glyphicon glyphicon-search"></i></button>
 			      </div>
 	    		</div>
-	 	 </form>
+</form>
 
 
 	<table class="table table-hover">
@@ -62,7 +62,22 @@
 	
 	<div>
 	
+	<ul class="pagination">
+		<c:if test="${pager.curBlock>1}">
+			<li><a href="#" class="cpager" title="${pager.startNum-1}">이전</a></li>
+		</c:if>
+		<c:forEach begin="${pager.startNum}" end="${pager.lastNum}" var="p">
+			<li><a href="#" class="cpager" title="${p}">${p}</a></li>
+		</c:forEach>	
+		
+		<c:if test="${pager.curBlock<pager.totalBlock }">
+			<li><a href="#" class="cpager" title="${pager.lastNum+1}">다음</a></li>
+		</c:if>
 	
+	</ul>
+	
+	
+	<!--  
 	<span><a href="#" class="cpager" title="0"> &lt;&lt;</a></span>
 	<span><a href="#" class="cpager" title="${page.number-1}">&lt;</a></span>
 	<c:forEach begin="${page.number}" end="${page.number+4}" var="i">
@@ -70,10 +85,10 @@
 			<a href=" #" class="cpager" title="${i}">${i+1}</a> 
 		</c:if>
 	</c:forEach>
-	<span><a href="#" class="cpager" title="${page.number+1}">&gt;</a></span> <!-- 다음 페이지로 -->
-	<span><a href="#" class="cpager" title="${page.getTotalPages()-1}"> &gt;&gt;</a></span><!-- 제일 끝으로 -->
+	<span><a href="#" class="cpager" title="${page.number+1}">&gt;</a></span> 
+	<span><a href="#" class="cpager" title="${page.getTotalPages()-1}"> &gt;&gt;</a></span>
 	
-	<hr>
+	<hr>-->
 	<!--  
 	<c:if test="${not page.isFirst() }">
 		<a href=" ./${board}List?page=${page.getNumber()-1 }">[이전]</a>
@@ -84,7 +99,7 @@
 	</c:if>	
 	</div> -->
 	
-	<a href="./${board}Write" class="btn btn-danger">Write</a>
+	  <a href="./${board}Write" class="btn btn-danger">Write</a>
 	<!--  
 	<div>
 		<ul class="pagination">
@@ -109,10 +124,10 @@
 <script type="text/javascript">
 
 	$(".cpager").click(function(){
-		var page = $(this).attr("title");//속성을 가지고오기 attr/prop
+		var page = $(this).attr("title");//속성을 가지고오기 attr/prop //1234 를 가지고올것
 		//alert(page);
 		$("#p").val(page);//form이 전송되면 안에 p도 파라미터로 넘어감
-		$("#frm").submit();//form 에 담겨서 넘어감
+		$("#frm").submit();//form 에 담겨서 넘어감//검색하는 폼
 	
 	});
 

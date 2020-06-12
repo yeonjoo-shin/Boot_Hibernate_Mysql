@@ -73,6 +73,7 @@ public class QnaController {
 		Page<QnaVO> page= qnaService.boardList(pager);
 		
 		mv.addObject("page",page);
+		mv.addObject("pager",pager);
 		mv.setViewName("board/boardList");
 		
 		return mv;

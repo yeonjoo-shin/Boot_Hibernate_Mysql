@@ -16,6 +16,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.iu.s1.board.notice.noticeFile.NoticeFileRepository;
 import com.iu.s1.board.notice.noticeFile.NoticeFileVO;
+import com.iu.s1.board.qna.QnaVO;
 import com.iu.s1.util.FileManager;
 import com.iu.s1.util.FilePathGenerator;
 import com.iu.s1.util.Pager;
@@ -42,31 +43,32 @@ public class NoticeService  {
 	private String filePath;
 	
 	//pager없을 땐느 매개변수없어도됨
-	public List<NoticeVO> getSelectList(/*Pageable pageable,String search,String kind*/Pager pager) throws Exception {
+	public Page<NoticeVO> getSelectList(/*Pageable pageable,String search,String kind*/Pager pager) throws Exception {
 		//List<NoticeVO> ar = noticeRepository.findAll();
 		//return ar;
 		//페이징 처리할 때는 아래처럼(검색도 같이)
 		//return noticeRepository.findByTitleContaining(search, pageable,kind); //"검색하고자 하는 것"
 		pager.makeRow();
-		pager.makePage(noticeRepository.count());
-		Pageable pageable = PageRequest.of((int)pager.getStartRow(), pager.getPerPage(),Sort.Direction.DESC,"num");
 		
-		List<NoticeVO> ar = new ArrayList<NoticeVO>();
+		Pageable pageable = PageRequest.of(pager.getStartRow(), pager.getSize(),Sort.Direction.DESC,"num");
 		
-		if(pager.getKind().equals("writer")) {
-			pager.makePage(noticeRepository.countByWriterContaining(pager.getSearch())); 
-			ar =  noticeRepository.findByTitleContaining(pager.getSearch(), pageable);
-			System.out.println(ar.size()+"ss");
-			
-		}else if(pager.getKind().equals("contents")){
-			pager.makePage(noticeRepository.countByContentsContaining(pager.getSearch()));
-			ar = noticeRepository.findByContentsContaining(pager.getSearch(), pageable);
-			
+		//List<NoticeVO> ar = new ArrayList<NoticeVO>();
+		
+		//Pageable pageable = PageRequest.of(pager.getStartRow(), pager.getSize(),Sort.by("ref").descending().and(Sort.by("step").ascending()));
+		
+		Page<NoticeVO> page = null; //전체페이지의 갯수가 이미 계산되어서 들어가있음
+		
+		if(pager.getKind().equals("title")) {
+			page = noticeRepository.findByTitleContaining(pager.getSearch(), pageable);
+		}else if(pager.getKind().equals("contents")) {
+			page = noticeRepository.findByContentsContaining(pager.getSearch(), pageable);
 		}else {
-			pager.makePage(noticeRepository.countByTitleContaining(pager.getSearch()));
-			ar= noticeRepository.findByTitleContaining(pager.getSearch(), pageable);
+			page = noticeRepository.findByWriterContaining(pager.getSearch(), pageable);
 		}
-		return ar;
+		
+		pager.makePage(page.getTotalPages());
+		
+		return page;
 	}
 		
 	

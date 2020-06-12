@@ -1,19 +1,25 @@
 package com.iu.s1.util;
 
+import org.springframework.stereotype.Component;
+
+import lombok.Data;
+
+@Data
+@Component
 public class Pager {
 	
-	private Long curPage;//현재 페이지 몇번째 페이지를 볼 것인가
-	private Integer perPage; // 페이지당 글 갯수
+	private Integer page;//현재 페이지 몇번째 페이지를 볼 것인가
+	private Integer size; // 페이지당 글 갯수
 	
-	private long startRow; //1
-	private long lastRow; // 10
+	private Integer startRow; //1
+	private Integer lastRow; // 10
 	
-	private long totalPage; //총 페이지 갯수
-	private long totalBlock; // 총 블록 갯수
-	private long curBlock; //현재 블록
+	private Integer totalPage; //총 페이지 갯수
+	private Integer totalBlock; // 총 블록 갯수
+	private Integer curBlock; //현재 블록
 	
-	private long startNum;//시작 번호
-	private long lastNum;//끝 번호
+	private Integer startNum;//시작 번호
+	private Integer lastNum;//끝 번호
 	
 	private String kind;
 	private String search;
@@ -21,22 +27,31 @@ public class Pager {
 	
 	//-------startrow/lastrow 계산하기
 	public void makeRow() {
-		this.startRow = (this.getCurPage()-1);
-		this.lastRow = this.getCurPage()*this.getPerPage();
+		this.startRow = this.getPage()-1;
+		this.lastRow = this.getPage()*this.getSize();
 	}
 	
 	//-----totalcount/totalpage 계산
-	public void makePage(long totalCount) {
+	public void makePage(int totalPage) {
 		//1. totalCount : 글 전체의 갯수
 		
+		
 		//2. totalcount로 totalPage 계산
-		this.totalPage= totalCount/this.getPerPage();
+		/*this.totalPage= totalCount/this.getSize();
 		if(totalCount%this.getCurPage() !=0) {
 			this.totalPage++;
-		}
+		}*/   	
+		
+		//totalPage를 매개변수로 받으면서 totalpage가 이미 계산을 다해서 가지고 오므로 계산을 할 필요가 없다.
+		this.setTotalPage(totalPage); //or this.totalPage = totalPage;
+		
+		
+		
+		
+		
 		
 		//3. totalpage ->totalblock 계산
-		long perBlock=5L;//블록당 page 갯수
+		int perBlock=5;//블록당 page 갯수
 		
 		this.totalBlock = totalPage/perBlock;
 		if(totalPage%perBlock !=0) {
@@ -44,8 +59,8 @@ public class Pager {
 		}
 		
 		//4. curpage - curblock 찾기
-		this.curBlock = this.curPage/perBlock;
-		if(this.curPage%perBlock !=0) {
+		this.curBlock = this.page/perBlock;
+		if(this.page%perBlock !=0) {
 			this.curBlock++;
 		}
 		//5. curblock startnum, lastnum계산
@@ -66,11 +81,7 @@ public class Pager {
 		return kind;
 	}
 
-	public void setKind(String kind) {
-		this.kind = kind;
-		
-	}
-
+	
 	public String getSearch() {
 		if(this.search == null) {
 			this.search="";
@@ -78,58 +89,25 @@ public class Pager {
 		return search;
 	}
 
-	public void setSearch(String search) {
-		this.search = search;
-	}
 	
 	
-	
-	public Long getCurPage() { //기본값 정해주기
-		if(this.curPage ==null || this.curPage ==0) {
-			this.curPage=1L;
+	//getcurPage
+	public Integer getPage() { //기본값 정해주기
+		if(this.page ==null || this.page ==0) {
+			this.page=1;
 		}
-		return curPage;
+		return page;
 	}
-	public void setCurPage(Long curPage) {
-		this.curPage = curPage;
-	}
-	public Integer getPerPage() {
-		if(this.perPage ==null || this.perPage ==0) {
-			this.perPage=10;
+	//getSize
+	public Integer getSize() {
+		if(this.size ==null || this.size ==0) {
+			this.size=10;
 		}
-		return perPage;
+		return size;
 	}
 	
-	public void setPerPage(Integer perPage) {
-		this.perPage = perPage;
-	}
-	public long getStartRow() {
-		return startRow;
-	}
 	
-	public long getLastRow() {
-		return lastRow;
-	}
-	
-	public long getTotalPage() {
-		return totalPage;
-	}
-	
-	public long getTotalBlock() {
-		return totalBlock;
-	}
-	
-	public long getCurBlock() {
-		return curBlock;
-	}
-	
-	public long getStartNum() {
-		return startNum;
-	}
-	
-	public long getLastNum() {
-		return lastNum;
-	}
+
 	
 	
 	

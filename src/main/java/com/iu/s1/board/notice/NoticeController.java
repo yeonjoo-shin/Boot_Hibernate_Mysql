@@ -5,6 +5,7 @@ import java.util.List;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
@@ -41,10 +42,12 @@ public class NoticeController {
 		//pageable =PageRequest.of(0, 10,Sort.Direction.DESC,"num");// 페이지번호(=curPage), 몇개씩, 정렬desc, 무엇을 기준으로?
 		
 		//List<NoticeVO> ar = noticeService.getSelectList(pageable,search,kind);
-		List<NoticeVO> ar = noticeService.getSelectList(pager);
-		System.out.println(ar.size()+"cc");
+		Page<NoticeVO> ar = noticeService.getSelectList(pager);
 		
-		mv.addObject("list",ar);
+		
+		//mv.addObject("list",ar);
+		mv.addObject("pager",pager);
+		mv.addObject("page",ar);
 		mv.setViewName("board/boardList");
 		
 		//List<NoticeVO> ar = noticeService.getSelectList();

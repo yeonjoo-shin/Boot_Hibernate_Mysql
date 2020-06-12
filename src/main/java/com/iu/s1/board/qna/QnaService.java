@@ -48,9 +48,10 @@ public class QnaService {
 			}
 		}*/
 		
-		pager.makeRow();
-		Pageable pageable = PageRequest.of((int)pager.getStartRow(), pager.getPerPage(),Sort.by("ref").descending().and(Sort.by("step").ascending()));
-		Page<QnaVO> page = null;
+		pager.makeRow();//0번 부터 만들어줌
+		Pageable pageable = PageRequest.of(pager.getStartRow(), pager.getSize(),Sort.by("ref").descending().and(Sort.by("step").ascending()));
+		Page<QnaVO> page = null; //전체페이지의 갯수가 이미 계산되어서 들어가있음
+		
 		if(pager.getKind().equals("title")) {
 			page = qnaRepository.findByTitleContaining(pager.getSearch(), pageable);
 		}else if(pager.getKind().equals("contents")) {
@@ -59,6 +60,7 @@ public class QnaService {
 			page = qnaRepository.findByWriterContaining(pager.getSearch(), pageable);
 		}
 		
+		pager.makePage(page.getTotalPages());
 		
 		return page;
 	}
