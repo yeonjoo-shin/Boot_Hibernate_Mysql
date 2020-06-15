@@ -18,7 +18,7 @@
 	  </div>
 	  <div class="form-group">
 	    <label for="writer">Writer:</label>
-	    <form:input path="writer" type="text" class="form-control" id="writer" />
+	    <form:input path="writer" type="text" class="form-control" id="writer"  />
 	     <form:errors path="writer"></form:errors>
 	  </div>
 	  <div class="form-group">
